@@ -1,34 +1,30 @@
 """
-Schedule running OCR Add-On on a project of documents on a schedule.
+Schedule running the Internet Archive upload Add-On on a project of documents on a schedule.
 """
 from itertools import islice
 from documentcloud.addon import AddOn
 
 
 class Scheduler(AddOn):
-    """An example Add-On for DocumentCloud."""
+    """Schedules the IA upload Add-On over a search query in batches."""
 
     def main(self):
-        """ Runs the selected OCR engine on a batch of documents """
-        self.client.session.headers.update({'User-Agent': 'OCR Scheduler Add-On'})
+        """Runs the IA upload Add-On on a batch of documents."""
+        self.client.session.headers.update({'User-Agent': 'IA Upload Scheduler Add-On'})
         batch_size = self.data.get("batch_size")
-        project_id = self.data.get("project_id")
-        ocr_engine = self.data.get("ocr_engine")
+        query = self.query
         batch_num = 1
 
-        if ocr_engine == "azure":
-            run_id = 544
-        if ocr_engine == "google":
-            run_id = 542
-        if ocr_engine == "doctr":
-            run_id = 549
-        if ocr_engine == "textract":
-            run_id = 1026
+        run_id = 175  # Internet Archive upload Add-On
 
-        documents = self.client.documents.search(
-            f"+project:{project_id} -data_ocr_engine:* +status:success"
-        )
-        print(project_id)
+        # make sure already-uploaded docs are excluded, without duplicating the clause
+        if "data_ia_url" not in query:
+            query = f"{query} -data_ia_url:*".strip()
+
+        print(query)
+
+        """
+        documents = self.client.documents.search(query)
 
         for i in range(batch_num):
             # Pull out the IDs for a batch of the documents
@@ -40,13 +36,12 @@ class Scheduler(AddOn):
                 "addon_runs/",
                 json={
                     "addon": run_id,
-                    "parameters": {
-                        "to_tag": True
-                    },
+                    "parameters": {},
                     "documents": doc_ids,
                     "dismissed": True,
                 },
             )
+        """
 
 if __name__ == "__main__":
     Scheduler().main()

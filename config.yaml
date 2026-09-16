@@ -1,36 +1,23 @@
-title: OCR Scheduler
-description: Run your favorite OCR Add-On on large sets of documents on a schedule. Premium OCR tools such as Azure and Google do require AI credits to run successfully.  
+title: Internet Archive Upload Scheduler
+description: Upload documents in batches on a scheduled basis to the Internet Archive.
 instructions: ''
 type: object
-documents: []
+documents:
+  - query
 properties:
-  ocr_engine:
-    title: OCR Engine
-    type: string
-    enum:
-      - azure
-      - google
-      - doctr
-      - textract
   batch_size:
     title: 'Batch size'
     type: integer
     default: 25
-    description: "How many documents do you want OCR'd per scheduled run?"
-  project_id:
-    title: "Project ID"
-    type: integer
-    description: "Project ID of the project you would like to run this on." 
+    description: "How many documents do you want upload to the Internet Archive per scheduled run?"
 required:
   - batch_size
-  - project_id
-  - ocr_engine
 eventOptions:
-  name: ocr_scheduler
+  name: ia_upload_scheduler
   events:
     - hourly
     - daily
     - weekly
 categories: 
-  - extract
+  - export
 version: 2
