@@ -23,7 +23,6 @@ class Scheduler(AddOn):
 
         print(query)
 
-        """
         documents = self.client.documents.search(query)
 
         for i in range(batch_num):
@@ -41,7 +40,6 @@ class Scheduler(AddOn):
                     "dismissed": True,
                 },
             )
-        """
 
 if __name__ == "__main__":
     Scheduler().main()
