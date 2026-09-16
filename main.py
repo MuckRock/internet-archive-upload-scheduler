@@ -15,7 +15,7 @@ class Scheduler(AddOn):
         query = self.query
         batch_num = 1
 
-        run_id = 175  # Internet Archive upload Add-On
+        run_id = 171  # Internet Archive upload Add-On
 
         # make sure already-uploaded docs are excluded, without duplicating the clause
         if "data_ia_url" not in query:
